@@ -1,3 +1,5 @@
+global using small_business_management_API.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
