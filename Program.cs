@@ -1,6 +1,6 @@
 global using small_business_management_API.Models;
 global using small_business_management_API.Services.TransactionService;
-
+global using small_business_management_API.Dtos.Transaction;
 
 var builder = WebApplication.CreateBuilder(args);
 

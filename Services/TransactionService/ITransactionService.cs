@@ -7,8 +7,8 @@ namespace small_business_management_API.Services.TransactionService
 {
     public interface ITrasactionService
     {
-        Task<ServiceResponse<List<Transaction>>> GetAllTrasactions();
-        Task<ServiceResponse<Transaction>> GetTransactionById(int id);
-        Task<ServiceResponse<List<Transaction>>> AddTransaction(Transaction newTransaction);
+        Task<ServiceResponse<List<GetTransactionDto>>> GetAllTrasactions();
+        Task<ServiceResponse<GetTransactionDto>> GetTransactionById(int id);
+        Task<ServiceResponse<List<Transaction>>> AddTransaction(AddTransactionDto newTransaction);
     }
 }

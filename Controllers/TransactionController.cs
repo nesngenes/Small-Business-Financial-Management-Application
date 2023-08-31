@@ -19,19 +19,19 @@ namespace small_business_management_API.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<ServiceResponse<List<Transaction>>>> Get()
+        public async Task<ActionResult<ServiceResponse<List<GetTransactionDto>>>> Get()
         {
             return Ok(await _transactionService.GetAllTrasactions());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<Transaction>>> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<GetTransactionDto>>> GetSingle(int id)
         {
             return Ok(await _transactionService.GetTransactionById(id));
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<List<Transaction>>>> AddTransaction(Transaction newTransaction)
+        public async Task<ActionResult<ServiceResponse<List<GetTransactionDto>>>> AddTransaction(AddTransactionDto newTransaction)
         {
             return Ok(await _transactionService.AddTransaction(newTransaction));
         }
