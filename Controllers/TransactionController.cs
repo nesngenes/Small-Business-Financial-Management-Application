@@ -11,22 +11,29 @@ namespace small_business_management_API.Controllers
     [Route("api/[controller]")]
     public class TransactionController : ControllerBase
     {
-        private static List<Transaction> transactions = new List<Transaction>
+        private readonly ITrasactionService _transactionService;
+
+        public TransactionController(ITrasactionService transactionService)
         {
-            new Transaction(),
-            new Transaction { TransactionId = 1, Category = "seblak" }
-        };
+            _transactionService = transactionService;
+        }
 
         [HttpGet("GetAll")]
-        public ActionResult<List<Transaction>> Get()
+        public async Task<ActionResult<ServiceResponse<List<Transaction>>>> Get()
         {
-            return Ok(transactions);
+            return Ok(await _transactionService.GetAllTrasactions());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Transaction> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<Transaction>>> GetSingle(int id)
         {
-            return Ok(transactions.FirstOrDefault(c => c.TransactionId == id));
+            return Ok(await _transactionService.GetTransactionById(id));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<List<Transaction>>>> AddTransaction(Transaction newTransaction)
+        {
+            return Ok(await _transactionService.AddTransaction(newTransaction));
         }
     }
 }
