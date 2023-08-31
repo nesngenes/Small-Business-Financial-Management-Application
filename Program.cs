@@ -1,6 +1,7 @@
 global using small_business_management_API.Models;
 global using small_business_management_API.Services.TransactionService;
 global using small_business_management_API.Dtos.Transaction;
+global using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<ITrasactionService, TransactionService>();
 
 var app = builder.Build();

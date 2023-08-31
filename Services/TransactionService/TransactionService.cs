@@ -12,27 +12,43 @@ namespace small_business_management_API.Services.TransactionService
             new Transaction(),
             new Transaction { TransactionId = 1, Category = "seblak" }
         };
-        public async Task<ServiceResponse<List<GetTransactionDto>>> AddTransaction(AddTransactionDto newTransaction)
+        private readonly IMapper _mapper;
+
+        public TransactionService(IMapper mapper)
         {
-            var serviceResponse =new ServiceResponse<List<GetTransactionDto>>();
-            transactions.Add(newTransaction);
-            serviceResponse.Data = transactions;
-            return serviceResponse;
+            _mapper = mapper;
         }
 
-        public async Task<ServiceResponse<List<GetTransactionDto>>> GetAllTrasactions()
-        {
-            var serviceResponse =new ServiceResponse<List<GetTransactionDto>>();
-            serviceResponse.Data = transactions;
-            return serviceResponse;
-        }
+        public async Task<ServiceResponse<List<Transaction>>> AddTransaction(AddTransactionDto newTransaction)
+    {
+        var serviceResponse = new ServiceResponse<List<Transaction>>();
+        var transaction = _mapper.Map<Transaction>(newTransaction);
+        transaction.TransactionId = transactions.Max(t => t.TransactionId) + 1;
+        transactions.Add(transaction);
+        serviceResponse.Data = transactions;
+        return serviceResponse;
+    }
 
-        public async Task<ServiceResponse<GetTransactionDto>> GetTransactionById(int id)
+    public async Task<ServiceResponse<List<GetTransactionDto>>> GetAllTrasactions()
+    {
+        var serviceResponse = new ServiceResponse<List<GetTransactionDto>>();
+        var dtoList = transactions.Select(c => _mapper.Map<GetTransactionDto>(c)).ToList();
+        serviceResponse.Data = dtoList;
+        return serviceResponse;
+    }
+
+    public async Task<ServiceResponse<GetTransactionDto>> GetTransactionById(int id)
+    {
+        var serviceResponse = new ServiceResponse<GetTransactionDto>();
+        var transaction = transactions.FirstOrDefault(c => c.TransactionId == id);
+        var dto = _mapper.Map<GetTransactionDto>(transaction);
+        serviceResponse.Data = dto;
+        return serviceResponse;
+    }
+
+        public Task<ServiceResponse<GetTransactionDto>> UpdateTransaction(UpdateTransactionDto updatedTransaction)
         {
-            var serviceResponse =new ServiceResponse<GetTransactionDto>();
-            var transaction = transactions.FirstOrDefault(c => c.TransactionId == id);
-            serviceResponse.Data = transaction;
-            return serviceResponse;
+            throw new NotImplementedException();
         }
     }
 }
